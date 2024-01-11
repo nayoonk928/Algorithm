@@ -7,7 +7,7 @@ input = sys.stdin.readline
 def dfs(node, visited):
     visited.append(node)
 
-    for adj in sorted(graph[node]):
+    for adj in graph[node]:
         if adj not in visited:
             dfs(adj, visited)
 
@@ -20,7 +20,7 @@ def bfs(start):
 
     while queue:
         node = queue.popleft()
-        for adj in sorted(graph[node]):
+        for adj in graph[node]:
             if adj not in visited:
                 queue.append(adj)
                 visited.append(adj)
@@ -36,6 +36,8 @@ if __name__ == "__main__":
         v1, v2 = map(int, input().split())
         graph[v1].append(v2)
         graph[v2].append(v1)
+        graph[v1].sort()
+        graph[v2].sort()
 
     dfs_result = dfs(start, [])
     bfs_result = bfs(start)
