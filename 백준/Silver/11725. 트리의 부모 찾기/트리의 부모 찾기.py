@@ -3,20 +3,17 @@ import sys
 input = sys.stdin.readline
 
 
-def get_parents(tree, n):
-    parents = [0] * (n + 1)
-    visited = [False] * (n + 1)
-    stack = [1]  # 시작 노드를 스택에 넣음
+def get_parents(start):
+    stack = [(start, 0)]  # (노드, 부모) 정보를 스택에 저장
 
     while stack:
-        node = stack.pop()
+        node, parent = stack.pop()
 
-        if not visited[node]:
-            visited[node] = True
-            for child in tree[node]:
-                if not visited[child]:
-                    parents[child] = node
-                    stack.append(child)
+        parents[node] = parent
+
+        for child in tree[node]:
+            if parents[child] == 0:  # 방문하지 않은 노드일 경우에만 스택에 추가
+                stack.append((child, node))
 
     return parents
 
@@ -30,7 +27,8 @@ if __name__ == "__main__":
         tree[a].append(b)
         tree[b].append(a)
 
-    result = get_parents(tree, n)
+    parents = [0] * (n + 1)
+    result = get_parents(1)
 
     for i in range(2, n + 1):
         print(result[i])
