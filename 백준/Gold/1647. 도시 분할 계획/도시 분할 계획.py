@@ -26,7 +26,7 @@ def get_minimum_cost(edges):
         if find(idx) != find(adj):
             union(idx, adj)
             total_cost += weight
-            max_weight = max(max_weight, weight)
+            max_weight = weight  # 가장 큰 가중치 = 마지막 가중치
 
     return total_cost - max_weight
 
