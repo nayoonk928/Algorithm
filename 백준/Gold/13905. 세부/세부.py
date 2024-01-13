@@ -10,7 +10,6 @@ def find(vertex):
     return parent[vertex]
 
 
-# union-by-rank 이용
 def union(a, b):
     a_parent = find(a)
     b_parent = find(b)
