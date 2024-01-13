@@ -17,7 +17,7 @@ def union(a, b):
     parent[b_parent] = a_parent
 
 
-def get_minimum_cost(n, edges):
+def get_minimum_cost(edges):
     edges.sort(key=lambda x: x[2])
     total_cost = 0
     max_weight = 0
@@ -35,13 +35,10 @@ if __name__ == '__main__':
     n, m = map(int, input().split())
     edges = []
     parent = [i for i in range(n + 1)]
-    graph = [[] for _ in range(n + 1)]
 
     for _ in range(m):
         a, b, c = map(int, input().split())
         if a != b:
-            graph[a].append((b, c))
-            graph[b].append((a, c))
             edges.append((a, b, c))
 
-    print(get_minimum_cost(graph, edges))
+    print(get_minimum_cost(edges))
