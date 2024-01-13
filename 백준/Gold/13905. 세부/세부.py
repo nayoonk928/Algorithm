@@ -1,6 +1,3 @@
-# 백준 13905번 세부
-#  https://www.acmicpc.net/problem/13905
-
 import sys
 
 input = sys.stdin.readline
@@ -18,13 +15,7 @@ def union(a, b):
     a_parent = find(a)
     b_parent = find(b)
 
-    if rank[a_parent] > rank[b_parent]:
-        parent[b_parent] = a_parent
-    else:
-        parent[a_parent] = b_parent
-
-        if rank[a_parent] == rank[b_parent]:
-            rank[b_parent] += 1
+    parent[b_parent] = a_parent
 
 
 def get_max(edges):
@@ -50,7 +41,6 @@ if __name__ == '__main__':
     start, end = map(int, input().split())
     edges = []
     parent = [i for i in range(n + 1)]
-    rank = [0 for i in range(n + 1)]
 
     for _ in range(m):
         h1, h2, weight = map(int, input().split())
