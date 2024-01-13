@@ -14,10 +14,16 @@ def union(a, b):
     a_parent = find(a)
     b_parent = find(b)
 
-    parent[b_parent] = a_parent
+    if rank[a_parent] > rank[b_parent]:
+        parent[b_parent] = a_parent
+    else:
+        parent[a_parent] = b_parent
+
+        if rank[a_parent] == rank[b_parent]:
+            rank[b_parent] += 1
 
 
-def get_minimum_cost(n, edges):
+def get_minimum_cost(edges):
     edges.sort(key=lambda x: x[2])
     min_cost = 0
     used_edges = 0
@@ -39,10 +45,11 @@ if __name__ == '__main__':
     m = int(input())
     edges = []
     parent = [i for i in range(n + 1)]
+    rank = [0 for i in range(n + 1)]
 
-    for i in range(m):
+    for _ in range(m):
         a, b, c = map(int, input().split())
         if a != b:
             edges.append((a, b, c))
 
-    print(get_minimum_cost(n, edges))
+    print(get_minimum_cost(edges))
