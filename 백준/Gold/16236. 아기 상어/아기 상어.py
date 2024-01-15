@@ -1,62 +1,75 @@
 import sys
 from collections import deque
-N = int(input())
 
-dx = [-1,0,0,1] # 상 좌 우 하
-dy = [0,-1,1,0]
-room = []
-sharksize = 2
-sharkeat = 0
+input = sys.stdin.readline
 
-for i in range(N):
-    room.append([int(x) for x in sys.stdin.readline().rstrip().split()])
-    for j in range(len(room[i])):
-        if room[i][j] == 9:
-            room[i][j] = 0
-            shark_x, shark_y = i, j
+# 상 좌 우 하
+dy = [-1, 0, 0, 1]
+dx = [0, -1, 1, 0]
 
-def finding_fish(sx,sy):
-    global sharksize
+
+def find_fish(shark_y, shark_x):
+    visited = [[False] * n for _ in range(n)]
+    distance = [[0] * n for _ in range(n)]
     deq = deque()
-    deq.append([sx,sy])
+    deq.append([shark_y, shark_x])
 
-    visited = [[False for _ in range(N)] for _ in range(N)]
-    distance = [[0 for _ in range(N)] for _ in range(N)]
-    can_eat_fish = []
-
+    can_eat = []
     while deq:
-        x, y = deq.popleft()
+        y, x = deq.popleft()
 
         for i in range(4):
-            nx, ny = x + dx[i], y + dy[i]
-            if 0 <= nx < N and 0 <= ny < N:
-                if room[nx][ny] <= sharksize and not visited[nx][ny]: #이동이 가능하면
-                    visited[nx][ny] = True
-                    distance[nx][ny] = distance[x][y] + 1
-                    deq.append([nx,ny])
+            ny = y + dy[i]
+            nx = x + dx[i]
 
-                    if room[nx][ny] < sharksize and room[nx][ny] != 0: #물고기가 있고 그걸 먹을 수 있다면
-                        can_eat_fish.append([nx ,ny,distance[nx][ny]])
+            if 0 <= nx < n and 0 <= ny < n:
+                # 이동 가능
+                if board[ny][nx] <= shark_size and not visited[ny][nx]:
+                    visited[ny][nx] = True
+                    distance[ny][nx] = distance[y][x] + 1
+                    deq.append([ny, nx])
 
-    can_eat_fish.sort(key= lambda x : (x[2],x[0],x[1])) # 정렬은 거리, x, y 오름차순으로
-    return can_eat_fish
+                    # 물고기가 있고 먹을 수 있는 경우
+                    if board[ny][nx] < shark_size and board[ny][nx] != 0:
+                        can_eat.append([ny, nx, distance[ny][nx]])
+
+    can_eat.sort(key=lambda x: (x[2], x[0], x[1]))  # 거리, y, x 오름차순
+    return can_eat
+
+
+def find_shark():
+    for i in range(n):
+        for j in range(n):
+            if board[i][j] == 9:
+                board[i][j] = 0
+                return i, j
+
 
 if __name__ == '__main__':
-    ans = 0
+    n = int(input())
+    board = []
+
+    for _ in range(n):
+        board.append(list(map(int, input().rstrip().split())))
+
+    shark_y, shark_x = find_shark()
+    shark_size = 2
+    eat_cnt = 0
+    time = 0
 
     while True:
-        fishlist = finding_fish(shark_x,shark_y)
+        fish = find_fish(shark_y, shark_x)
+        if len(fish) == 0:
+            break
 
-        if len(fishlist) == 0: # 먹을 수 있는 물고기가 없다면
-            print(ans)
-            exit(0)
+        shark_y, shark_x, t = fish[0]
 
-        shark_x, shark_y, move_time = fishlist[0]
+        eat_cnt += 1
+        if shark_size == eat_cnt:
+            shark_size += 1
+            eat_cnt = 0
 
-        sharkeat += 1
-        if sharksize == sharkeat: #먹은 물고기수와 사이즈가 같다면
-            sharkeat = 0
-            sharksize += 1
+        board[shark_y][shark_x] = 0  # 물고기 먹은자리 빈칸
+        time += t
 
-        room[shark_x][shark_y] = 0 # 물고기 먹은 자리는 빈칸으로 바꿈
-        ans += move_time
+    print(time)
