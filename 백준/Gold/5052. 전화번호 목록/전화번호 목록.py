@@ -21,14 +21,6 @@ class Trie:
             node = node.data[n]
         node.leaf = True
 
-    def search(self, num):
-        node = self.root
-        for n in num:
-            if n not in node.data:
-                return False
-            node = node.data[n]
-        return node.leaf
-
     def starts_with(self, prefix):
         node = self.root
         for n in prefix:
@@ -45,7 +37,7 @@ def is_valid(phone_nums):
     phone_nums = sorted(phone_nums)
 
     for num in phone_nums:
-        if trie.search(num) or trie.starts_with(num):
+        if trie.starts_with(num):
             return "NO"
         trie.insert(num)
 
