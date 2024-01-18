@@ -1,7 +1,6 @@
 import sys
-import heapq
-input = sys.stdin.readline
 
+input = sys.stdin.readline
 
 def get_length():
     sensors.sort()
@@ -9,15 +8,10 @@ def get_length():
     if n == 1:
         return 0
 
-    heap = []
-    for i in range(n - 1):
-        heapq.heappush(heap, sensors[i] - sensors[i + 1])
+    diffs = [sensors[i+1] - sensors[i] for i in range(n-1)]
+    diffs.sort(reverse=True)
 
-    for _ in range(k - 1):
-        heapq.heappop(heap)
-
-    return -sum(heap)
-
+    return sum(diffs[k-1:])
 
 if __name__ == '__main__':
     n = int(input())
