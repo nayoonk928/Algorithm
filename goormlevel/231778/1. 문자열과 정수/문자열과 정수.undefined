@@ -1,0 +1,6 @@
+<?php
+    $a = trim(fgets(STDIN)); // 개행 문자를 제거
+    $b = trim(fgets(STDIN)); // 개행 문자를 제거
+    echo $a . $b . "\n"; // 문자열 결합하여 출력
+    echo ((int)$a + (int)$b) . "\n"; // 정수로 변환하여 더한 값을 출력
+?>
