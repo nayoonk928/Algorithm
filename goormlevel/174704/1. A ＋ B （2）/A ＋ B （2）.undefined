@@ -1,0 +1,8 @@
+<?php
+	$input = trim(fgets(STDIN));
+	$nums = explode(' ', $input);
+
+	$sum = floatval($nums[0]) + floatval($nums[1]);
+    
+	echo number_format($sum, 6);
+?>
