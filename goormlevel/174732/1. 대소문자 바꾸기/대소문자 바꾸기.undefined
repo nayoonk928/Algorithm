@@ -1,0 +1,17 @@
+<?php
+	$n = fgets(STDIN);
+	$input = fgets(STDIN);
+	$result = '';
+	
+	for ($i = 0; $i < $n; $i++) {
+		$char = $input[$i];
+		
+		if (ctype_upper($char)) {
+			$result .= strtolower($char);
+		} else {
+			$result .= strtoupper($char);
+		}
+	}
+
+	echo $result;
+?>
