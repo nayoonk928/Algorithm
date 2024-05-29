@@ -1,0 +1,6 @@
+<?php
+	$input = trim(fgets(STDIN));
+	$nums = explode(' ', $input);
+
+	echo $nums[0] + $nums[1];
+?>
