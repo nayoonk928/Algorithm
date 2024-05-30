@@ -1,0 +1,12 @@
+<?php
+	$n = fgets(STDIN);
+	$input = trim(fgets(STDIN));
+	$arr = explode(' ', $input);
+
+	$sum = 0;
+	foreach ($arr as $val) {
+		$sum += (int)$val;
+	}
+
+	echo decoct($sum);
+?>
