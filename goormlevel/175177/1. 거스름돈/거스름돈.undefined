@@ -1,0 +1,15 @@
+<?php
+	$n = fgets(STDIN);
+	$arr = array(1, 5, 10, 20, 40);
+
+	$result = 0;
+	while ($n > 0) {
+		for ($i = count($arr) - 1; $i >= 0; $i--) {
+			$count = intdiv($n, $arr[$i]);
+			$result += $count;
+			$n -= $count * $arr[$i];
+		}
+	}
+
+	echo $result;
+?>
