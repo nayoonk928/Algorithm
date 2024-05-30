@@ -1,0 +1,17 @@
+<?php
+	$input = trim(fgets(STDIN));
+  list($n, $k) = explode(' ', $input);
+
+	$input2 = trim(fgets(STDIN));
+	$arr = explode(' ', $input2);
+
+	$result = 0;
+	for ($i = 0; $i < $n; $i++) {
+		$numberStr = strval($arr[$i]);
+		if (strpos($numberStr, $k) === false) {
+			$result++;
+		}
+	}
+
+	echo $result;
+?>
